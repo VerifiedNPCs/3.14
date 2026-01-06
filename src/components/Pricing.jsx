@@ -2,7 +2,7 @@ import React from 'react';
 
 const Pricing = () => {
   return (
-    <section className="py-24 px-6 lg:px-12 relative overflow-hidden">
+    <section id="pricing" className="py-24 px-6 lg:px-12 relative overflow-hidden">
       <div className="absolute inset-0 bg-slate-50 dark:bg-transparent -z-10"></div>
       <div className="container mx-auto">
         <div className="mb-12">
@@ -19,16 +19,16 @@ const Pricing = () => {
                 <p className="text-sm text-slate-500 mb-6 flex-grow">Essential tools for individual traders starting out.</p>
                 <ul className="space-y-3 mb-8 text-sm relative z-10">
                     <li className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
-                        <span className="material-icons-round text-xs text-slate-400 text-emerald-500 transition-colors">check</span> Basic limited alerts
+                        <span className="material-icons-round text-xs text-emerald-500 transition-colors">check</span> Basic limited alerts
                     </li>
                     <li className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
-                        <span className="material-icons-round text-xs text-slate-400 text-emerald-500 transition-colors">check</span> 5 Saved crypto charts
+                        <span className="material-icons-round text-xs text-emerald-500 transition-colors">check</span> 5 Saved crypto charts
                     </li>
                     <li className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
-                        <span className="material-icons-round text-xs text-slate-400 text-emerald-500 transition-colors">check</span> Image capturing
+                        <span className="material-icons-round text-xs text-emerald-500 transition-colors">check</span> Image capturing
                     </li>
                     <li className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
-                        <span className="material-icons-round text-xs text-slate-400 text-emerald-500 transition-colors">check</span> 1 Week trial 
+                        <span className="material-icons-round text-xs text-emerald-500 transition-colors">check</span> 1 Week trial 
                     </li>
                 </ul>
                 <button className="w-full py-3 rounded-lg bg-slate-100 dark:bg-slate-800 group-hover:bg-emerald-500 group-hover:text-white text-slate-900 dark:text-white font-semibold transition-colors relative z-10">Start Free</button>

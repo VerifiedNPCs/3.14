@@ -36,9 +36,17 @@ const Hero = () => {
           <a href="#" className="px-8 py-4 bg-primary hover:bg-primary-hover text-slate-900 font-bold rounded-full shadow-neon transition-all hover:-translate-y-0.5">
             Start Free Trial
           </a>
-          <a href="#" className="px-8 py-4 bg-transparent border border-slate-300 dark:border-slate-600 hover:border-primary dark:hover:border-primary text-slate-700 dark:text-white font-semibold rounded-full transition-all hover:-translate-y-0.5">
+          <button 
+            onClick={() => {
+              const element = document.getElementById('pricing');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="px-8 py-4 bg-transparent border border-slate-300 dark:border-slate-600 hover:border-primary dark:hover:border-primary text-slate-700 dark:text-white font-semibold rounded-full transition-all hover:-translate-y-0.5"
+          >
             View Plans
-          </a>
+          </button>
         </div>
 
         <div className="pt-8 flex items-center justify-center lg:justify-start gap-4 text-sm text-slate-500 dark:text-slate-500">
