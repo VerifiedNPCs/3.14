@@ -5,9 +5,7 @@ const Footer = () => {
     <footer className="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark py-12 px-6 lg:px-12 relative z-10">
       <div className="container mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         <div className="flex items-center gap-2">
-          <div className="text-primary transform -rotate-45">
-            <span className="material-icons-round text-2xl">send</span>
-          </div>
+          <img src="/logo.png" alt="Drelegram Logo" className="w-8 h-8 object-contain" />
           <span className="font-bold text-lg text-slate-700 dark:text-slate-200">Drelegram</span>
         </div>
         <div className="flex flex-wrap justify-center gap-8 text-sm text-slate-500 dark:text-slate-400">

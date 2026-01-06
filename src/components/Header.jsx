@@ -6,9 +6,7 @@ const Header = () => {
   return (
     <header className="w-full py-6 px-6 lg:px-12 flex justify-between items-center relative z-20">
       <div className="flex items-center gap-2">
-        <div className="text-primary transform -rotate-45">
-          <span className="material-icons-round text-3xl">send</span>
-        </div>
+        <img src="/logo.png" alt="Drelegram Logo" className="w-8 h-8 object-contain" />
         <span className="font-bold text-xl tracking-tight hidden sm:block text-slate-900 dark:text-white">
           Drelegram
         </span>
