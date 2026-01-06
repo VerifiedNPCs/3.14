@@ -9,6 +9,8 @@ const Hero = () => {
   const { price: ethPrice, change: ethChange } = useCryptoPrice('ethusdt');
   const { price: solPrice, change: solChange } = useCryptoPrice('solusdt');
   const { price: goldPrice } = useCryptoPrice('paxgusdt'); // Live Gold Price
+  const botUsername = "drelegrambot"; // REPLACE THIS
+  const trialLink = `https://t.me/${botUsername}?start=free_trial`;
   
   // 2. Get Real Chart History
   const { chartPath, isUp } = useGoldHistory();
@@ -33,7 +35,13 @@ const Hero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-          <a href="#" className="px-8 py-4 bg-primary hover:bg-primary-hover text-slate-900 font-bold rounded-full shadow-neon transition-all hover:-translate-y-0.5">
+          <a 
+            href={trialLink}
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="px-8 py-4 bg-primary hover:bg-primary-hover text-slate-900 font-bold rounded-full shadow-neon transition-all hover:-translate-y-0.5 flex items-center justify-center gap-2"
+          >
+            <span className="material-icons-round">telegram</span>
             Start Free Trial
           </a>
           <button 
