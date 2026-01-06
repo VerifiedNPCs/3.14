@@ -1,9 +1,25 @@
 import React from 'react';
+import { useCryptoPrice } from '../hooks/useCryptoPrice';
+import { useGoldHistory } from '../hooks/useGoldHistory';
+import { SiBitcoin, SiEthereum, SiSolana } from "react-icons/si";
 
 const Hero = () => {
+  // 1. Get Live Data (Price + Percentage)
+  const { price: btcPrice, change: btcChange, color: btcColor } = useCryptoPrice('btcusdt');
+  const { price: ethPrice, change: ethChange } = useCryptoPrice('ethusdt');
+  const { price: solPrice, change: solChange } = useCryptoPrice('solusdt');
+  const { price: goldPrice } = useCryptoPrice('paxgusdt'); // Live Gold Price
+  
+  // 2. Get Real Chart History
+  const { chartPath, isUp } = useGoldHistory();
+
+  // Helper for percentage color
+  const getPercentColor = (val) => parseFloat(val) >= 0 ? 'text-primary' : 'text-red-500';
+  const getTrendIcon = (val) => parseFloat(val) >= 0 ? 'trending_up' : 'trending_down';
+
   return (
     <section className="container mx-auto px-6 lg:px-12 py-12 lg:py-24 flex flex-col lg:flex-row items-center gap-12 lg:gap-20 relative z-10">
-      {/* Left Content */}
+      {/* Left Content (Unchanged) */}
       <div className="flex-1 space-y-8 text-center lg:text-left">
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight text-slate-900 dark:text-white">
           Smart Currency &amp; <br className="hidden lg:block"/>
@@ -43,22 +59,24 @@ const Hero = () => {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-slate-800 rounded-b-xl z-20"></div>
           
           <div className="w-full h-full bg-slate-900 flex flex-col pt-8 p-4 text-white relative">
-            {/* Header inside phone */}
             <div className="flex justify-between items-center mb-6 px-2">
               <span className="material-icons-round text-sm text-slate-400">arrow_back_ios</span>
               <span className="font-bold text-sm">BTC/USDT</span>
               <span className="material-icons-round text-sm text-slate-400">settings</span>
             </div>
             
-            {/* Price Display */}
+            {/* Live BTC Price & % */}
             <div className="flex flex-col gap-1 mb-4">
-              <div className="text-3xl font-bold text-white">$120,291.00</div>
-              <div className="text-primary text-sm flex items-center gap-1">
-                <span className="material-icons-round text-sm">trending_up</span> +1.24%
+              <div className={`text-3xl font-bold transition-colors duration-300 ${btcColor}`}>
+                ${btcPrice}
+              </div>
+              <div className={`${getPercentColor(btcChange)} text-sm flex items-center gap-1`}>
+                <span className="material-icons-round text-sm">{getTrendIcon(btcChange)}</span> 
+                {btcChange > 0 ? '+' : ''}{btcChange}%
               </div>
             </div>
 
-            {/* Main Chart Area */}
+            {/* Static Mock Chart for Phone Header (Can replace with library later) */}
             <div className="h-32 w-full bg-slate-800/50 rounded-xl mb-4 relative overflow-hidden flex items-end px-1 gap-1">
               <div className="w-1/6 bg-primary/20 h-[40%] rounded-t-sm"></div>
               <div className="w-1/6 bg-primary/40 h-[60%] rounded-t-sm"></div>
@@ -71,37 +89,51 @@ const Hero = () => {
               </svg>
             </div>
 
-            {/* Recent Signals List */}
+            {/* List with Real Icons & Live Data */}
             <div className="space-y-3">
+              {/* BTC Item */}
               <div className="p-3 bg-slate-800 rounded-lg flex justify-between items-center">
                 <div className="flex gap-3 items-center">
-                  <div className="w-8 h-8 rounded bg-orange-500/20 flex items-center justify-center text-orange-500 font-bold text-xs">₿</div>
-                  <div className="flex flex-col">
-                    <span className="text-xs font-bold">Bitcoin</span>
-                    <span className="text-[10px] text-slate-400">Buy Signal</span>
-                  </div>
+                    {/* Real BTC Icon from react-icons */}
+                    <SiBitcoin size={24} color="#F7931A" />
+                    <div className="flex flex-col">
+                        <span className="text-xs font-bold">Bitcoin</span>
+                        <span className="text-[10px] text-green-400">Buy</span>
+                    </div>
                 </div>
-                <div className="text-xs text-primary font-bold">Strong Buy</div>
+                <div className={`text-xs font-bold ${getPercentColor(btcChange)}`}>
+                    {btcChange > 0 ? '+' : ''}{btcChange}%
+                </div>
               </div>
+
+              {/* ETH Item */}
               <div className="p-3 bg-slate-800 rounded-lg flex justify-between items-center">
                 <div className="flex gap-3 items-center">
-                  <div className="w-8 h-8 rounded bg-blue-500/20 flex items-center justify-center text-blue-500 font-bold text-xs">Ξ</div>
+                  {/* ETH Icon (Blue Diamond) */}
+                  <SiEthereum size={24} color="#acacadff" />
                   <div className="flex flex-col">
                     <span className="text-xs font-bold">Ethereum</span>
-                    <span className="text-[10px] text-slate-400">Volume Alert</span>
+                    <span className="text-[10px] text-green-400">Strong Buy</span>
                   </div>
                 </div>
-                <div className="text-xs text-slate-300">High Vol</div>
+                <div className={`text-xs font-bold ${getPercentColor(ethChange)}`}>
+                    {ethChange > 0 ? '+' : ''}{ethChange}%
+                </div>
               </div>
+
+              {/* SOL Item */}
               <div className="p-3 bg-slate-800 rounded-lg flex justify-between items-center opacity-60">
                 <div className="flex gap-3 items-center">
-                  <div className="w-8 h-8 rounded bg-purple-500/20 flex items-center justify-center text-purple-500 font-bold text-xs">S</div>
+                  {/* SOL Icon (Purple S) */}
+                  <SiSolana size={24} color="#4cffbdff" />
                   <div className="flex flex-col">
                     <span className="text-xs font-bold">Solana</span>
-                    <span className="text-[10px] text-slate-400">Dip Alert</span>
+                    <span className="text-[10px] text-red-400">Short</span>
                   </div>
                 </div>
-                <div className="text-xs text-red-400">-2.4%</div>
+                <div className={`text-xs font-bold ${getPercentColor(solChange)}`}>
+                    {solChange > 0 ? '+' : ''}{solChange}%
+                </div>
               </div>
             </div>
             
@@ -112,7 +144,6 @@ const Hero = () => {
         </div>
 
         {/* Floating Widgets */}
-        {/* 1. Signal Success */}
         <div className="absolute top-20 -right-4 lg:-right-12 bg-surface-dark p-3 rounded-lg border border-slate-700 shadow-xl hidden sm:flex items-center gap-3 animate-bounce" style={{ animationDuration: '3s' }}>
           <span className="material-icons-round text-primary">check_circle</span>
           <div className="text-xs">
@@ -121,36 +152,52 @@ const Hero = () => {
           </div>
         </div>
 
-        {/* 2. ETH Alert */}
         <div className="absolute bottom-32 -left-4 lg:-left-12 bg-surface-dark p-3 rounded-lg border border-slate-700 shadow-xl hidden sm:flex items-center gap-3 animate-pulse">
           <span className="material-icons-round text-accent-purple">notifications_active</span>
           <div className="text-xs">
             <div className="text-slate-400">New Alert</div>
-            <div className="font-bold text-white">ETH broke $3200</div>
+            <div className="font-bold text-white">ETH: ${ethPrice}</div>
           </div>
         </div>
 
-        {/* 3. Gold Price */}
+        {/* Real Gold Price + Real 30-Day Chart */}
         <div className="absolute bottom-20 -right-4 lg:-right-12 bg-surface-dark p-3 rounded-lg border border-slate-700 shadow-xl hidden sm:flex flex-col gap-2 animate-pulse" style={{ animationDuration: '4s' }}>
           <div className="flex items-center gap-3">
             <span className="material-icons-round text-yellow-500">monetization_on</span>
             <div className="text-xs">
-              <div className="text-slate-400">Gold Price</div>
-              <div className="font-bold text-white">$4621.12</div>
+              <div className="text-slate-400">Gold (PAXG)</div>
+              <div className="font-bold text-white">${goldPrice}</div>
             </div>
           </div>
-          {/* Small Gold Chart */}
+          {/* REAL CHART HERE */}
           <div className="h-8 w-32 bg-slate-800/50 rounded flex items-center justify-center overflow-hidden relative">
-            <svg className="w-full h-full absolute inset-0" preserveAspectRatio="none" viewBox="0 0 100 40">
-              <path d="M0 30 Q 20 35 40 15 T 100 10" fill="none" stroke="#eab308" strokeWidth="2" />
-              <defs>
-                <linearGradient id="goldGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="rgba(234, 179, 8, 0.2)" />
-                  <stop offset="100%" stopColor="transparent" />
-                </linearGradient>
-              </defs>
-              <path d="M0 30 Q 20 35 40 15 T 100 10 V 40 H 0 Z" fill="url(#goldGradient)" />
-            </svg>
+             {chartPath ? (
+                <svg className="w-full h-full absolute inset-0" preserveAspectRatio="none" viewBox="0 0 100 40">
+                  <path 
+                    d={chartPath} 
+                    fill="none" 
+                    stroke={isUp ? "#eab308" : "#ef4444"} // Yellow if up, Red if down
+                    strokeWidth="2" 
+                  />
+                  <path 
+                    d={`${chartPath} V 40 H 0 Z`} 
+                    fill={`url(#goldGradient${isUp ? 'Up' : 'Down'})`} 
+                    opacity="0.3" 
+                  />
+                  <defs>
+                    <linearGradient id="goldGradientUp" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#eab308" />
+                        <stop offset="100%" stopColor="transparent" />
+                    </linearGradient>
+                    <linearGradient id="goldGradientDown" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#ef4444" />
+                        <stop offset="100%" stopColor="transparent" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+             ) : (
+                <div className="text-[10px] text-slate-500">Loading...</div>
+             )}
           </div>
         </div>
       </div>
