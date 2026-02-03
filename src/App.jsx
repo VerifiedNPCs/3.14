@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import DashboardLayout from './components/dashboard/DashboardLayout';
+import PaymentPage from './pages/PaymentPage';
 
 function App() {
   // Handle Dark Mode logic
@@ -17,9 +18,12 @@ function App() {
       <Routes>
         {/* Home Page - Landing Page */}
         <Route path="/" element={<HomePage />} />
-
+        
         {/* Dashboard - User Dashboard */}
         <Route path="/dashboard" element={<DashboardLayout />} />
+        
+        {/* Payment Page - Accessed from Telegram Bot */}
+        <Route path="/payment" element={<PaymentPage />} />
       </Routes>
     </Router>
   );
