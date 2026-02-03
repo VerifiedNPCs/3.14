@@ -31,7 +31,14 @@ const Pricing = () => {
                         <span className="material-icons-round text-xs text-emerald-500 transition-colors">check</span> 1 Week trial 
                     </li>
                 </ul>
-                <button className="w-full py-3 rounded-lg bg-slate-100 dark:bg-slate-800 group-hover:bg-emerald-500 group-hover:text-white text-slate-900 dark:text-white font-semibold transition-colors relative z-10">Start Free</button>
+                <a 
+                  href="https://t.me/drelegrambot" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full py-3 rounded-lg bg-slate-100 dark:bg-slate-800 group-hover:bg-emerald-500 group-hover:text-white text-slate-900 dark:text-white font-semibold transition-colors relative z-10 text-center"
+                >
+                  Start Free
+                </a>
             </div>
 
             {/* Pro Plan (Blue) */}
@@ -56,7 +63,14 @@ const Pricing = () => {
                         <span className="material-icons-round text-xs text-blue-500">check</span> Telegram integration
                     </li>
                 </ul>
-                <button className="w-full py-3 rounded-lg bg-blue-500/50 border border-slate-500/40 dark:border-blue-900 group-hover:border-blue-500 group-hover:bg-blue-500 group-hover:text-white text-slate-900 dark:text-blue-200 font-semibold transition-colors relative z-10">Start Pro</button>
+                <a 
+                  href="https://t.me/drelegrambot" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full py-3 rounded-lg bg-blue-500/50 border border-slate-500/40 dark:border-blue-900 group-hover:border-blue-500 group-hover:bg-blue-500 group-hover:text-white text-slate-900 dark:text-blue-200 font-semibold transition-colors relative z-10 text-center"
+                >
+                  Start Pro
+                </a>
             </div>
 
             {/* Business+ Plan (Purple) */}
@@ -82,7 +96,14 @@ const Pricing = () => {
                         <span className="material-icons-round text-xs text-accent-purple">check</span> Custom feature
                     </li>
                 </ul>
-                <button className="w-full py-3 rounded-lg bg-purple-700/30 border border-accent-purple bg-transparent text-accent-purple group-hover:bg-accent-purple group-hover:text-white font-semibold transition-colors relative z-10">Power Your VIP Group</button>
+                <a 
+                  href="https://t.me/drelegrambot" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full py-3 rounded-lg bg-purple-700/30 border border-accent-purple bg-transparent text-accent-purple group-hover:bg-accent-purple group-hover:text-white font-semibold transition-colors relative z-10 text-center"
+                >
+                  Power Your VIP Group
+                </a>
             </div>
 
             {/* Enterprise+ Plan (Orange) */}
@@ -101,7 +122,14 @@ const Pricing = () => {
                         <span className="material-icons-round text-xs text-orange-500">check</span> Unlimited access
                     </li>
                 </ul>
-                <button className="w-full py-3 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-600 dark:text-orange-500 group-hover:bg-orange-500 group-hover:text-white font-bold transition-colors relative z-10">Contact Us</button>
+                <a 
+                  href="https://t.me/drelegrambot" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="w-full py-3 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-600 dark:text-orange-500 group-hover:bg-orange-500 group-hover:text-white font-bold transition-colors relative z-10 text-center"
+                >
+                  Contact Us
+                </a>
             </div>
         </div>
       </div>
