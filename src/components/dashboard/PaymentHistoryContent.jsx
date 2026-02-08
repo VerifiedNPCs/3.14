@@ -1,95 +1,50 @@
-// src/components/PaymentHistoryContent.jsx
+// src/components/dashboard/PaymentHistoryContent.jsx
 import React, { useState } from 'react';
+import { format } from 'date-fns';
 
-const PaymentHistoryContent = ({ userId }) => {
+const PaymentHistoryContent = ({ userId, transactions = [] }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  const payments = [
-    {
-      date: 'Oct 24, 2023',
-      plan: 'Pro Plan',
-      amount: '0.05 ETH',
-      usdAmount: '$92.50',
-      asset: 'ETH',
-      txHash: '0x7d...3a2',
-      status: 'Confirmed'
-    },
-    {
-      date: 'Sep 24, 2023',
-      plan: 'Pro Plan',
-      amount: '100.00 USDC',
-      usdAmount: '$100.00',
-      asset: 'USDC',
-      txHash: '0x3b...9c1',
-      status: 'Confirmed'
-    },
-    {
-      date: 'Aug 24, 2023',
-      plan: 'Enterprise',
-      amount: '2.5 SOL',
-      usdAmount: '$150.00',
-      asset: 'SOL',
-      txHash: '5jK...m9P',
-      status: 'Pending'
-    },
-    {
-      date: 'Jul 24, 2023',
-      plan: 'Pro Plan',
-      amount: '0.04 ETH',
-      usdAmount: '$75.00',
-      asset: 'ETH',
-      txHash: '0x9e...2b4',
-      status: 'Failed'
-    },
-    {
-      date: 'Jun 24, 2023',
-      plan: 'Pro Plan',
-      amount: '0.05 ETH',
-      usdAmount: '$92.50',
-      asset: 'ETH',
-      txHash: '0xa2...4d9',
-      status: 'Confirmed'
-    },
-    {
-      date: 'May 24, 2023',
-      plan: 'Pro Plan',
-      amount: '100.00 USDC',
-      usdAmount: '$100.00',
-      asset: 'USDC',
-      txHash: '0x1c...7f3',
-      status: 'Confirmed'
+  // Filter transactions based on search term
+  const filteredTransactions = transactions.filter(tx => 
+    tx.tx_hash?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    tx.plan?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const formatDate = (dateString) => {
+    try {
+      return format(new Date(dateString), 'MMM dd, yyyy');
+    } catch {
+      return 'N/A';
     }
-  ];
+  };
 
   const getStatusIcon = (status) => {
     switch (status) {
-      case 'Confirmed':
+      case 'confirmed':
         return <span className="material-symbols-outlined text-green-500 text-xl">check_circle</span>;
-      case 'Pending':
+      case 'pending':
         return <span className="material-symbols-outlined text-yellow-500 text-xl">schedule</span>;
-      case 'Failed':
+      case 'failed':
         return <span className="material-symbols-outlined text-red-500 text-xl">error</span>;
       default:
-        return null;
+        return <span className="material-symbols-outlined text-gray-500 text-xl">help</span>;
     }
   };
 
   const getStatusColor = (status) => {
     switch (status) {
-      case 'Confirmed':
-        return 'text-green-500';
-      case 'Pending':
-        return 'text-yellow-500';
-      case 'Failed':
-        return 'text-red-500';
-      default:
-        return 'text-gray-500';
+      case 'confirmed': return 'text-green-500';
+      case 'pending': return 'text-yellow-500';
+      case 'failed': return 'text-red-500';
+      default: return 'text-gray-500';
     }
   };
 
   return (
     <div className="flex-1 px-4 py-8 lg:px-40 lg:py-10">
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-8">
+        
         {/* Page Heading */}
         <div className="flex flex-col gap-2">
           <h1 className="text-3xl font-black leading-tight tracking-tight lg:text-4xl text-[#111122] dark:text-white">
@@ -114,12 +69,6 @@ const PaymentHistoryContent = ({ userId }) => {
               <span className="text-sm font-medium text-[#111122] dark:text-white">All Assets</span>
               <span className="material-symbols-outlined text-[#6b7280] dark:text-[#9292c9] text-lg">expand_more</span>
             </button>
-
-            <button className="group flex h-9 items-center gap-2 rounded-lg border border-[#e5e7eb] dark:border-[#232348] bg-white dark:bg-[#232348] px-4 hover:border-primary transition-colors">
-              <span className="material-symbols-outlined text-[#6b7280] dark:text-[#9292c9] text-lg">filter_list</span>
-              <span className="text-sm font-medium text-[#111122] dark:text-white">All Status</span>
-              <span className="material-symbols-outlined text-[#6b7280] dark:text-[#9292c9] text-lg">expand_more</span>
-            </button>
           </div>
 
           <div className="relative flex-1 max-w-md">
@@ -142,89 +91,106 @@ const PaymentHistoryContent = ({ userId }) => {
             <table className="w-full">
               <thead className="bg-[#f9fafb] dark:bg-[#1a1a2e] border-b border-[#e5e7eb] dark:border-[#232348]">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">
-                    Date
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">
-                    Plan
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">
-                    Amount
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">
-                    Asset
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">
-                    Transaction Hash
-                  </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">
-                    Status
-                  </th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">Date</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">Plan</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">Amount</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">Asset</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">Transaction Hash</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-[#6b7280] dark:text-[#9292c9]">Status</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-[#e5e7eb] dark:divide-[#232348]">
-                {payments.map((payment, index) => (
-                  <tr key={index} className="hover:bg-[#f9fafb] dark:hover:bg-[#1a1a2e] transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="text-sm font-medium text-[#111122] dark:text-white">{payment.date}</span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-                        {payment.plan}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex flex-col">
-                        <span className="text-sm font-semibold text-[#111122] dark:text-white">{payment.amount}</span>
-                        <span className="text-xs text-[#6b7280] dark:text-[#9292c9]">≈ {payment.usdAmount}</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="inline-flex items-center gap-1 rounded-lg bg-[#f3f4f6] dark:bg-[#232348] px-2 py-1 text-xs font-mono font-medium text-[#111122] dark:text-white">
-                        {payment.asset}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-2">
-                        <span className="font-mono text-sm text-[#111122] dark:text-white">{payment.txHash}</span>
-                        <button className="text-primary hover:text-primary/80 transition-colors">
-                          <span className="material-symbols-outlined text-lg">open_in_new</span>
-                        </button>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center gap-2">
-                        {getStatusIcon(payment.status)}
-                        <span className={`text-sm font-medium ${getStatusColor(payment.status)}`}>
-                          {payment.status}
-                        </span>
+                {filteredTransactions.length === 0 ? (
+                  <tr>
+                    <td colSpan="6" className="px-6 py-12 text-center text-[#6b7280] dark:text-[#9292c9]">
+                      <div className="flex flex-col items-center gap-2">
+                        <span className="material-symbols-outlined text-4xl opacity-50">receipt_long</span>
+                        <p>No transactions found</p>
                       </div>
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  filteredTransactions.map((tx, index) => (
+                    <tr key={index} className="hover:bg-[#f9fafb] dark:hover:bg-[#1a1a2e] transition-colors">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="text-sm font-medium text-[#111122] dark:text-white">
+                          {formatDate(tx.created_at)}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary capitalize">
+                          {tx.plan || 'Subscription'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex flex-col">
+                          <span className="text-sm font-semibold text-[#111122] dark:text-white">
+                            {tx.crypto_amount ? `${tx.crypto_amount} ${tx.crypto_currency || ''}` : `$${tx.amount}`}
+                          </span>
+                          {tx.crypto_amount && (
+                            <span className="text-xs text-[#6b7280] dark:text-[#9292c9]">
+                              ≈ ${tx.amount}
+                            </span>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="inline-flex items-center gap-1 rounded-lg bg-[#f3f4f6] dark:bg-[#232348] px-2 py-1 text-xs font-mono font-medium text-[#111122] dark:text-white">
+                          {tx.crypto_currency || 'USD'}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {tx.tx_hash ? (
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-sm text-[#111122] dark:text-white">
+                              {tx.tx_hash.slice(0, 6)}...{tx.tx_hash.slice(-4)}
+                            </span>
+                            <a 
+                              href={`https://etherscan.io/tx/${tx.tx_hash}`}
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="text-primary hover:text-primary/80 transition-colors"
+                            >
+                              <span className="material-symbols-outlined text-lg">open_in_new</span>
+                            </a>
+                          </div>
+                        ) : (
+                          <span className="text-xs text-[#6b7280] dark:text-[#9292c9] italic">Pending</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          {getStatusIcon(tx.status)}
+                          <span className={`text-sm font-medium capitalize ${getStatusColor(tx.status)}`}>
+                            {tx.status}
+                          </span>
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>
         </div>
 
-        {/* Pagination */}
-        <div className="flex items-center justify-between">
-          <p className="text-sm text-[#6b7280] dark:text-[#9292c9]">
-            Showing <span className="font-medium text-[#111122] dark:text-white">1</span> to{' '}
-            <span className="font-medium text-[#111122] dark:text-white">6</span> of{' '}
-            <span className="font-medium text-[#111122] dark:text-white">24</span> results
-          </p>
-          <div className="flex gap-2">
-            <button className="flex h-9 items-center justify-center rounded-lg border border-[#e5e7eb] dark:border-[#232348] bg-white dark:bg-[#232348] px-4 hover:bg-[#f9fafb] dark:hover:bg-[#1a1a2e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-              <span className="material-symbols-outlined text-lg text-[#6b7280] dark:text-[#9292c9]">chevron_left</span>
-              <span className="text-sm font-medium text-[#111122] dark:text-white ml-1">Previous</span>
-            </button>
-            <button className="flex h-9 items-center justify-center rounded-lg border border-[#e5e7eb] dark:border-[#232348] bg-white dark:bg-[#232348] px-4 hover:bg-[#f9fafb] dark:hover:bg-[#1a1a2e] transition-colors">
-              <span className="text-sm font-medium text-[#111122] dark:text-white mr-1">Next</span>
-              <span className="material-symbols-outlined text-lg text-[#6b7280] dark:text-[#9292c9]">chevron_right</span>
-            </button>
+        {/* Pagination (Simplified) */}
+        {filteredTransactions.length > 0 && (
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-[#6b7280] dark:text-[#9292c9]">
+              Showing <span className="font-medium text-[#111122] dark:text-white">1</span> to{' '}
+              <span className="font-medium text-[#111122] dark:text-white">{filteredTransactions.length}</span> results
+            </p>
+            <div className="flex gap-2">
+              <button className="flex h-9 items-center justify-center rounded-lg border border-[#e5e7eb] dark:border-[#232348] bg-white dark:bg-[#232348] px-4 hover:bg-[#f9fafb] dark:hover:bg-[#1a1a2e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <span className="material-symbols-outlined text-lg text-[#6b7280] dark:text-[#9292c9]">chevron_left</span>
+              </button>
+              <button className="flex h-9 items-center justify-center rounded-lg border border-[#e5e7eb] dark:border-[#232348] bg-white dark:bg-[#232348] px-4 hover:bg-[#f9fafb] dark:hover:bg-[#1a1a2e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                <span className="material-symbols-outlined text-lg text-[#6b7280] dark:text-[#9292c9]">chevron_right</span>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
