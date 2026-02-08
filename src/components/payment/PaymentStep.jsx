@@ -142,7 +142,7 @@ const PaymentStep = ({ selectedAsset, planType, totalMoney, userId, onPaymentCom
           <li>Copy the wallet address or scan the QR code</li>
           <li>Open your crypto wallet app</li>
           <li>Send exactly {cryptoAmount} {selectedAsset.id.toUpperCase()} to the address</li>
-          <li>Optionally paste your transaction hash above (you can find it in your wallet’s history)</li>
+          <li>paste your transaction hash above (you can find it in your wallet’s history)</li>
           <li>Click "I've Sent Payment" to complete</li>
         </ol>
       </div>
