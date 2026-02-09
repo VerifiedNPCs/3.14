@@ -1,15 +1,29 @@
-# 🤗 Hello from Derelgram 
+# 💻 Drelegram WebApp
 
-This Telegram bot provides real-time currency and cryptocurrency prices, tailored alerts, and advanced charting features for traders and investors. 
+The Drelegram Web Interface provides a seamless extension to the Telegram bot, offering users a rich, visual environment to manage their subscriptions, view payment history, and complete secure transactions.
 
-It allows users to customize:
-- timeframes
-- track orders
-- receive automated trading signals 
+## 🌐 User Dashboard
 
-directly in their Telegram groups.
+Access your personal control center directly from the Telegram bot. No separate login credentials required—just one click authentication.
 
- **🤖 The bot is designed for seamless integration, making it the perfect tool for professional and VIP trading communities.**
+*   **Overview at a Glance:** Instantly view your current plan status, days remaining, and account details.
+*   **Subscription Management:** Upgrade or downgrade plans effortlessly. The system automatically calculates prorated costs and applies credits for unused time.
+*   **Notification Center:** Stay updated with important alerts regarding your subscription status, payment confirmations, and system announcements.
+*   **Dark Mode Support:** Fully optimized dark theme for comfortable viewing in any lighting condition.
+
+## 💳 Secure Payment Hub
+
+A dedicated, secure environment for processing transactions without leaving the ecosystem.
+
+*   **Crypto-First Payments:** Built for the modern trader. Pay securely using **USDT (TRC20)** and other major cryptocurrencies.
+*   **Live Exchange Rates:** Real-time calculation of crypto amounts based on current market rates.
+*   **Transaction History:** A complete, searchable archive of all your past payments, receipts, and subscription changes.
+*   **Timer-Based Security:** Payment sessions are protected with countdown timers to ensure exchange rate validity and transaction security.
+
+***
 
 > For more information please see our website:
-[Drelegram](https://3-14-wine.vercel.app/)
+[Drelegram](https://drelegram.vercel.app/)
+
+> **To access the dashboard:**
+> Simply open the @DrelegramBot in Telegram and click the **"🌐 Open Dashboard"** button in the main menu.
