@@ -10,8 +10,9 @@ const PaymentPage = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   
-  // State
+  // UI State
   const [loading, setLoading] = useState(true);
+  const [optionsLoading, setOptionsLoading] = useState(true);
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedAsset, setSelectedAsset] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState(null);
@@ -19,13 +20,14 @@ const PaymentPage = () => {
   
   // Data State
   const [paymentData, setPaymentData] = useState(null);
+  const [cryptoOptions, setCryptoOptions] = useState([]);
 
   // Get Payment ID
   const paymentId = searchParams.get('payment_id');
 
-  // 1. Initial Load: Fetch Details Securely
+  // 1. Initial Load: Fetch Payment Details & Crypto Options
   useEffect(() => {
-    const fetchDetails = async () => {
+    const fetchAllDetails = async () => {
       if (!paymentId) {
         alert('Invalid payment link.');
         navigate('/');
@@ -39,25 +41,32 @@ const PaymentPage = () => {
            await apiService.authenticateTelegramPayment(tg.initData);
         }
 
-        // API CALL: Get Amount & Plan from Backend
+        // A. Get Basic Payment Info (Amount & Plan)
         const data = await apiService.getPaymentRequest(paymentId);
-
         setPaymentData({
           plan: data.plan,
           amount: data.amount, 
           userId: data.userId,
           status: data.status
         });
+
+        // B. Get Real-time Crypto Options (Prices & Wallets)
+        // Ensure you added this method to your apiService!
+        const optionsData = await apiService.getCryptoOptions(paymentId);
+        setCryptoOptions(optionsData.options || []);
         
         setLoading(false);
+        setOptionsLoading(false);
+
       } catch (error) {
         console.error("Payment load error:", error);
         alert("Failed to load payment details.");
         setLoading(false);
+        setOptionsLoading(false);
       }
     };
 
-    fetchDetails();
+    fetchAllDetails();
   }, [paymentId, navigate, searchParams]);
 
   // 2. Timer Logic
@@ -87,6 +96,11 @@ const PaymentPage = () => {
   };
 
   const handleAssetSelect = (asset) => {
+    // Double check wallet availability before proceeding
+    if (!asset.wallet_address) {
+        alert("This payment method is temporarily unavailable.");
+        return;
+    }
     setSelectedAsset(asset);
     setCurrentStep(2);
   };
@@ -94,16 +108,18 @@ const PaymentPage = () => {
   const handlePaymentComplete = async (status, txHash) => {
     setLoading(true);
     try {
-      // FORCE STATUS TO BE 'confirmed' FOR BACKEND
-      // The UI might use 'success', but backend needs 'confirmed'
+      // Backend expects 'confirmed', UI might return 'success'
       const backendStatus = status === 'success' ? 'confirmed' : status;
       
       console.log("Sending confirmation to backend:", backendStatus);
 
-      // Call API
-      await apiService.confirmPayment(paymentId, backendStatus, txHash);
-      
-      // Update UI state
+      const response = await apiService.confirmPayment(paymentId, backendStatus, txHash);
+
+      if (response.dashboard_token) {
+        apiService.setToken(response.dashboard_token);
+        console.log('✅ Dashboard access token stored');
+      }
+
       setPaymentStatus('success'); 
       setCurrentStep(3);
     } catch (err) {
@@ -118,8 +134,12 @@ const PaymentPage = () => {
   const handleCancel = () => {
     if (window.confirm('Cancel payment?')) {
       const tg = window.Telegram?.WebApp;
-      if (tg) tg.close();
-      else navigate('/');
+      if (tg) {
+        tg.close();
+      } else {
+        // Redirect to bot with "cancelled" parameter
+        window.location.href = 'https://t.me/drelegrambot?start=payment_cancelled';
+      }
     }
   };
 
@@ -191,9 +211,11 @@ const PaymentPage = () => {
             <SelectAssetStep 
               planType={paymentData.plan}
               totalMoney={paymentData.amount}
+              options={cryptoOptions}
               onAssetSelect={handleAssetSelect}
               timeLeft={timeLeft}
               formatTime={formatTime}
+              loading={optionsLoading}
             />
           )}
           {currentStep === 2 && (

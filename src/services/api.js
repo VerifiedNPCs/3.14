@@ -146,6 +146,10 @@ class ApiService {
     return await this.fetch(`/payment/${paymentId}`);
   }
 
+  async getCryptoOptions(paymentId) {
+    return await this.fetch(`/payment/${paymentId}/crypto-options`);
+  }
+
   // 2. Confirm Payment to Update DB
   async confirmPayment(paymentId, status, txHash = null) {
     return await this.fetch('/payment/confirm', {
