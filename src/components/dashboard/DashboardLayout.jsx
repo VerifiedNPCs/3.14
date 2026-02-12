@@ -29,17 +29,48 @@ const DashboardLayout = () => {
       setLoading(true);
       setError(null);
 
-      // Get credentials from URL
+      // 🎯 FLOW 1: Check if token already exists in localStorage (from payment or previous login)
+      const existingToken = localStorage.getItem('auth_token');
+      
+      if (existingToken) {
+        console.log('✅ Using stored authentication token');
+        
+        try {
+          // Try to load data with existing token
+          await loadUserData();
+          
+          // Clean up URL params if they exist
+          if (searchParams.get('user_id') || searchParams.get('token')) {
+            window.history.replaceState({}, '', '/dashboard');
+          }
+          
+          setLoading(false);
+          return; // Success! Stop here
+          
+        } catch (err) {
+          // Token is invalid/expired, clear it and fall through to URL params
+          console.warn('⚠️ Stored token invalid, trying URL authentication...');
+          apiService.clearToken();
+        }
+      }
+
+      // 🎯 FLOW 2: No stored token or it was invalid - try URL params (from bot)
       const userId = searchParams.get('user_id');
       const token = searchParams.get('token');
       
       if (!userId || !token) {
-        setError("⚠️ Missing authentication credentials. Please access from Telegram bot.");
+        setError(
+          "🔒 Authentication Required\n\n" +
+          "Please access your dashboard from:\n" +
+          "• The Telegram bot (@drelegrambot)\n" +
+          "• Or complete a payment first"
+        );
         setLoading(false);
         return;
       }
 
       // Authenticate with token from bot
+      console.log('🔑 Authenticating with URL token...');
       const authData = await apiService.loginWithToken(parseInt(userId), token);
       console.log("✅ Authenticated:", authData);
 
@@ -163,7 +194,6 @@ const DashboardLayout = () => {
             activeView={activeView}
             setActiveView={setActiveView}
             userId={userData?.user_id}
-            // ADDED MISSING PROPS
             userData={userData}
             subscription={subscriptionData}
           />

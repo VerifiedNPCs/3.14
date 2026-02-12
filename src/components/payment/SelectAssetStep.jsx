@@ -1,34 +1,16 @@
 // src/components/payment/SelectAssetStep.jsx
 import React from 'react';
 
-const SelectAssetStep = ({ planType, totalMoney, onAssetSelect, timeLeft, formatTime }) => {
-  const cryptoAssets = [
-    {
-      id: 'btc',
-      name: 'Bitcoin',
-      network: 'BTC Network',
-      icon: 'currency_bitcoin'
-    },
-    {
-      id: 'eth',
-      name: 'Ethereum',
-      network: 'ERC-20 Network',
-      icon: 'diamond'
-    },
-    {
-      id: 'usdt',
-      name: 'Tether (USDT)',
-      network: 'TRC-20 / ERC-20',
-      icon: 'attach_money'
-    },
-    {
-      id: 'usdc',
-      name: 'USD Coin (USDC)',
-      network: 'ERC-20 / SOL',
-      icon: 'monetization_on'
-    }
-  ];
-
+const SelectAssetStep = ({ 
+    planType, 
+    totalMoney, 
+    onAssetSelect, 
+    timeLeft, 
+    formatTime, 
+    options = [],
+    loading
+}) => {
+  
   return (
     <>
       {/* Header Text */}
@@ -44,6 +26,7 @@ const SelectAssetStep = ({ planType, totalMoney, onAssetSelect, timeLeft, format
       {/* Main Card Container */}
       <div className="w-full bg-[#102216] border border-[#22492f] rounded-2xl shadow-[0_0_50px_rgba(13,242,89,0.05)] overflow-hidden">
         <div className="flex flex-col md:flex-row">
+          
           {/* Left: Order Summary */}
           <div className="w-full md:w-1/3 bg-[#162e1f] p-6 md:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-[#22492f]">
             <div>
@@ -69,43 +52,79 @@ const SelectAssetStep = ({ planType, totalMoney, onAssetSelect, timeLeft, format
               </div>
             </div>
             <div className="text-xs text-[#5c8a6d] leading-relaxed">
-              <p>Transaction ID: <span className="font-mono text-[#90cba4]">#8392-DK29</span></p>
+              <p>Transaction ID: <span className="font-mono text-[#90cba4]">#SECURE-PYMNT</span></p>
               <p>Merchant: <span className="text-white">Drelegram Inc.</span></p>
             </div>
           </div>
 
           {/* Right: Crypto Selector Grid */}
           <div className="w-full md:w-2/3 p-6 md:p-8 bg-[#102216]">
-            <div className="mb-6">
+            <div className="mb-6 flex items-center justify-between">
               <h2 className="text-white text-lg font-bold">Select Wallet</h2>
+              {loading && <span className="text-xs text-[#0df259] animate-pulse">Live updating...</span>}
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {cryptoAssets.map((asset) => (
-                <button
-                  key={asset.id}
-                  onClick={() => onAssetSelect(asset)}
-                  className="group relative flex flex-col gap-3 rounded-xl border border-[#316843] bg-[#183422] p-5 items-start hover:border-[#0df259] hover:shadow-[0_0_15px_rgba(13,242,89,0.15)] transition-all duration-300 text-left"
-                >
-                  <div className="flex w-full justify-between items-start">
-                    <div className="bg-white/10 p-2 rounded-lg group-hover:bg-[#0df259]/20 transition-colors">
-                      <span className="material-symbols-outlined text-white group-hover:text-[#0df259] !text-[32px]">
-                        {asset.icon}
-                      </span>
-                    </div>
-                    <span className="material-symbols-outlined text-[#316843] group-hover:text-[#0df259] opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0">
-                      arrow_forward
-                    </span>
-                  </div>
-                  <div>
-                    <h3 className="text-white text-lg font-bold leading-tight group-hover:text-[#0df259] transition-colors">
-                      {asset.name}
-                    </h3>
-                    <p className="text-[#5c8a6d] text-sm mt-1">{asset.network}</p>
-                  </div>
-                  <div className="absolute inset-0 rounded-xl ring-2 ring-[#0df259] opacity-0 group-focus:opacity-100 pointer-events-none"></div>
-                </button>
-              ))}
+              {loading && options.length === 0 ? (
+                 <div className="col-span-full py-12 text-center text-[#5c8a6d]">
+                    <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-[#0df259] mb-2"></div>
+                    <p>Fetching real-time exchange rates...</p>
+                 </div>
+              ) : (
+                options.map((asset) => {
+                  // Check if wallet address exists (provided by backend)
+                  const isAvailable = Boolean(asset.wallet_address && asset.wallet_address.trim() !== '');
+
+                  return (
+                    <button
+                      key={asset.id}
+                      onClick={() => isAvailable && onAssetSelect(asset)}
+                      disabled={!isAvailable}
+                      className={`
+                        group relative flex flex-col gap-3 rounded-xl border p-5 items-start text-left transition-all duration-300
+                        ${isAvailable 
+                            ? 'bg-[#183422] border-[#316843] hover:border-[#0df259] hover:shadow-[0_0_15px_rgba(13,242,89,0.15)] cursor-pointer' 
+                            : 'bg-[#14261b] border-[#1e3a29] opacity-50 cursor-not-allowed grayscale'}
+                      `}
+                    >
+                      <div className="flex w-full justify-between items-start">
+                        <div className={`p-2 rounded-lg transition-colors ${isAvailable ? 'bg-white/10 group-hover:bg-[#0df259]/20' : 'bg-white/5'}`}>
+                          <span className={`material-symbols-outlined !text-[32px] ${isAvailable ? 'text-white group-hover:text-[#0df259]' : 'text-gray-500'}`}>
+                            {asset.icon}
+                          </span>
+                        </div>
+                        {isAvailable ? (
+                             <span className="text-[#90cba4] text-[10px] font-mono bg-[#102216] px-2 py-1 rounded border border-[#22492f]">
+                                1 {asset.id.toUpperCase()} ≈ ${asset.rate.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                             </span>
+                        ) : (
+                             <span className="text-red-400 text-[10px] font-bold bg-red-900/20 px-2 py-1 rounded border border-red-900/50">
+                                UNAVAILABLE
+                             </span>
+                        )}
+                      </div>
+                      
+                      <div className="w-full">
+                        <h3 className={`text-lg font-bold leading-tight transition-colors ${isAvailable ? 'text-white group-hover:text-[#0df259]' : 'text-gray-400'}`}>
+                          {asset.name}
+                        </h3>
+                        <div className="flex justify-between items-end mt-1">
+                          <p className="text-[#5c8a6d] text-sm">{asset.network}</p>
+                          {isAvailable && (
+                            <p className="text-[#0df259] font-mono font-bold text-lg">
+                              {asset.crypto_amount} <span className="text-xs">{asset.id.toUpperCase()}</span>
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      
+                      {isAvailable && (
+                        <div className="absolute inset-0 rounded-xl ring-2 ring-[#0df259] opacity-0 group-focus:opacity-100 pointer-events-none"></div>
+                      )}
+                    </button>
+                  );
+                })
+              )}
             </div>
 
             {/* Footer Info in Card */}
