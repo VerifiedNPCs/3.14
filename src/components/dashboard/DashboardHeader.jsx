@@ -203,7 +203,7 @@ const DashboardHeader = ({
                         <span className="material-symbols-outlined text-3xl">link_off</span>
                       </div>
                       <p className="text-sm text-[#6b6b99] mb-6">No wallet connected. Please link your wallet in the bot settings.</p>
-                      <a href="https://t.me/drelegrambot" target="_blank" rel="noopener noreferrer" className="block w-full py-2.5 px-4 rounded-lg bg-primary text-white font-bold text-sm hover:bg-primary/90 text-center">
+                      <a href="https://t.me/meowpibot" target="_blank" rel="noopener noreferrer" className="block w-full py-2.5 px-4 rounded-lg bg-primary text-white font-bold text-sm hover:bg-primary/90 text-center">
                         Open Bot to Connect
                       </a>
                     </div>

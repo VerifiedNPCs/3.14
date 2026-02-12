@@ -117,7 +117,7 @@ const DashboardSidebar = ({
         <div className="mt-auto pt-4 border-t border-[#e5e5f0] dark:border-[#232348]">
           <a
             className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-[#6b6b99] dark:text-[#9292c9] hover:bg-[#f0f2f5] dark:hover:bg-[#232348] hover:text-[#111122] dark:hover:text-white transition-all cursor-pointer font-medium"
-            href="https://t.me/drelegrambot"
+            href="https://t.me/meowpibot"
             target="_blank"
             rel="noopener noreferrer"
           >

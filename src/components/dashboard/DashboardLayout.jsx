@@ -165,7 +165,7 @@ const DashboardLayout = () => {
             {error}
           </p>
           <a
-            href="https://t.me/drelegrambot"
+            href="https://t.me/meowpibot"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-colors"

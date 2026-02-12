@@ -10,7 +10,7 @@ const ConfirmStep = ({ paymentStatus, planType, totalMoney, userId }) => {
   };
 
   const handleBackToBot = () => {
-    window.location.href = 'https://t.me/drelegrambot';
+    window.location.href = 'https://t.me/meowpibot';
   };
 
   if (paymentStatus === 'success') {
@@ -86,7 +86,7 @@ const ConfirmStep = ({ paymentStatus, planType, totalMoney, userId }) => {
               Go to Dashboard
             </button>
             <button
-              onClick={() => window.open("https://t.me/drelegrambot?start=payment_success", "_blank")}
+              onClick={() => window.open("https://t.me/meowpibot?start=payment_success", "_blank")}
               className="flex-1 py-3 px-6 rounded-xl border border-[#22492f] text-white font-bold hover:bg-[#183422] transition-colors flex items-center justify-center gap-2"
             >
               <span className="material-symbols-outlined">chat</span>
@@ -144,7 +144,7 @@ const ConfirmStep = ({ paymentStatus, planType, totalMoney, userId }) => {
             Try Again
           </button>
           <button
-            onClick={() => window.open("https://t.me/drelegrambot?start=payment_failed", "_blank")}
+            onClick={() => window.open("https://t.me/meowpibot?start=payment_failed", "_blank")}
             className="flex-1 py-3 px-6 rounded-xl border border-[#22492f] text-white font-bold hover:bg-[#183422] transition-colors flex items-center justify-center gap-2"
           >
             <span className="material-symbols-outlined">support_agent</span>

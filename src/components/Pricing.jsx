@@ -32,7 +32,7 @@ const Pricing = () => {
                     </li>
                 </ul>
                 <a 
-                  href="https://t.me/drelegrambot" 
+                  href="https://t.me/meowpibot" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-full py-3 rounded-lg bg-slate-100 dark:bg-slate-800 group-hover:bg-emerald-500 group-hover:text-white text-slate-900 dark:text-white font-semibold transition-colors relative z-10 text-center"
@@ -64,7 +64,7 @@ const Pricing = () => {
                     </li>
                 </ul>
                 <a 
-                  href="https://t.me/drelegrambot" 
+                  href="https://t.me/meowpibot" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-full py-3 rounded-lg bg-blue-500/50 border border-slate-500/40 dark:border-blue-900 group-hover:border-blue-500 group-hover:bg-blue-500 group-hover:text-white text-slate-900 dark:text-blue-200 font-semibold transition-colors relative z-10 text-center"
@@ -97,7 +97,7 @@ const Pricing = () => {
                     </li>
                 </ul>
                 <a 
-                  href="https://t.me/drelegrambot" 
+                  href="https://t.me/meowpibot" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-full py-3 rounded-lg bg-purple-700/30 border border-accent-purple bg-transparent text-accent-purple group-hover:bg-accent-purple group-hover:text-white font-semibold transition-colors relative z-10 text-center"
@@ -123,7 +123,7 @@ const Pricing = () => {
                     </li>
                 </ul>
                 <a 
-                  href="https://t.me/drelegrambot" 
+                  href="https://t.me/meowpibot" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-full py-3 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-600 dark:text-orange-500 group-hover:bg-orange-500 group-hover:text-white font-bold transition-colors relative z-10 text-center"

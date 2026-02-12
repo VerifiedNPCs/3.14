@@ -253,7 +253,7 @@ const DashboardContent = ({ userId, userData, subscription, transactions, wallet
                     <span className="text-xs md:text-sm font-display font-medium text-[#6b6b99] dark:text-[#9292c9] ml-1">Mins</span>
                   </div>
                   <a 
-                    href="https://t.me/drelegrambot" 
+                    href="https://t.me/meowpibot" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className={`${
@@ -278,7 +278,7 @@ const DashboardContent = ({ userId, userData, subscription, transactions, wallet
                     </p>
                   </div>
                   <a 
-                    href="https://t.me/drelegrambot" 
+                    href="https://t.me/meowpibot" 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="ml-auto bg-red-500 hover:bg-red-600 text-white px-5 py-2.5 rounded-lg text-sm font-bold shadow-lg transition-all whitespace-nowrap"
@@ -361,7 +361,7 @@ const DashboardContent = ({ userId, userData, subscription, transactions, wallet
                     </button>
                   ) : (
                     <a 
-                      href="https://t.me/drelegrambot" 
+                      href="https://t.me/meowpibot" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className={`w-full py-2.5 px-4 rounded-lg font-bold text-sm transition-colors text-center ${planInfo.buttonClass}`}

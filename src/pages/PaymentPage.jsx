@@ -138,7 +138,7 @@ const PaymentPage = () => {
         tg.close();
       } else {
         // Redirect to bot with "cancelled" parameter
-        window.location.href = 'https://t.me/drelegrambot?start=payment_cancelled';
+        window.location.href = 'https://t.me/meowpibot?start=payment_cancelled';
       }
     }
   };
