@@ -1,5 +1,5 @@
 // src/services/api.js
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3141/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://drelegrambot-production-311f.up.railway.app:3141/api';
 
 class ApiService {
   constructor() {
